@@ -16,7 +16,7 @@ Paper: http://arxiv.org/abs/2208.01066 <br><br>
 ```
 
 ## Getting started
-You can start by cloning our repository and following the steps below.
+Song Mei modification: You can start by cloning our repository and following the steps below.
 
 1. Install the dependencies for our code using Conda. You may need to adjust the environment YAML file depending on your setup.
 

@@ -17,7 +17,7 @@ from models import build_model
 import wandb
 
 torch.backends.cudnn.benchmark = True
-
+device = 'cpu'
 
 def train_step(model, xs, ys, optimizer, loss_func):
     optimizer.zero_grad()
@@ -86,11 +86,11 @@ def train(model, args):
 
         loss_func = task.get_training_metric()
 
-        loss, output = train_step(model, xs.cuda(), ys.cuda(), optimizer, loss_func)
+        loss, output = train_step(model, xs.to('cpu'), ys.to('cpu'), optimizer, loss_func)
 
         point_wise_tags = list(range(curriculum.n_points))
         point_wise_loss_func = task.get_metric()
-        point_wise_loss = point_wise_loss_func(output, ys.cuda()).mean(dim=0)
+        point_wise_loss = point_wise_loss_func(output, ys.to('cpu')).mean(dim=0)
 
         baseline_loss = (
             sum(
@@ -152,7 +152,7 @@ def main(args):
         )
 
     model = build_model(args.model)
-    model.cuda()
+    model.to(device)
     model.train()
 
     train(model, args)
